@@ -1,0 +1,29 @@
+{
+    "name": "micaherne/moodle-phpstan",
+    "description": "Rules and utilities for using PHPStan on Moodle code.",
+    "type": "phpstan-extension",
+    "repositories": [{
+        "type": "vcs",
+        "url": "../moodle-analysis-utils"
+    }],
+    "require": {
+        "micaherne/moodle-analysis-utils": "dev-main"
+    },
+    "require-dev": {
+        "phpstan/phpstan": "^1.10",
+        "rector/rector": "^1.0",
+        "phpunit/phpunit": "^11.0"
+    },
+    "license": "GPL-3.0-or-later",
+    "autoload": {
+        "psr-4": {
+            "MoodlePhpstan\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Michael Aherne",
+            "email": "micaherne@blueyonder.co.uk"
+        }
+    ]
+}
