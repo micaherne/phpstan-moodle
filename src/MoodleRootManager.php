@@ -12,6 +12,8 @@ class MoodleRootManager
     public function createAliases(): void
     {
         CoreComponentBridge::loadCoreComponent($this->moodleRoot);
+        CoreComponentBridge::registerClassloader();
         CoreComponentBridge::loadStandardLibraries();
+        CoreComponentBridge::unregisterClassloader();
     }
 }
