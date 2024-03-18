@@ -23,6 +23,8 @@ class MoodleRootManager
         CoreComponentBridge::registerClassloader();
         CoreComponentBridge::loadStandardLibraries();
         require_once __DIR__ . '/../resources/bootstrap-class-aliases/' . $this->moodleVersion . '.php';
+
+        // Remove classloader so that PHPStan does not try to use it to find classes.
         CoreComponentBridge::unregisterClassloader();
     }
 }
