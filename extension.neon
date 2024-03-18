@@ -1,0 +1,22 @@
+parameters:
+
+	moodle:
+		addAliasesForRenamedClasses: true
+
+	scanDirectories: [ %moodle.rootDirectory% ]
+
+	treatPhpDocTypesAsCertain: false
+
+	bootstrapFiles:
+		- bootstrap.php
+
+services:
+	moodleRootManager:
+		class: MoodlePhpstan\MoodleRootManager
+		arguments: [ %moodle.rootDirectory% ]
+
+parametersSchema:
+	moodle: structure([
+		rootDirectory: string(),
+		addAliasesForRenamedClasses: bool()
+	])
