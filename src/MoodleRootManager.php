@@ -3,13 +3,15 @@
 namespace MoodlePhpstan;
 
 use Exception;
+use MoodleAnalysis\Component\CoreComponentBridge;
 
 class MoodleRootManager
 {
     public function __construct(private string $moodleRoot, private ?string $moodleVersion) {}
 
-    public function fail()
+    public function createAliases(): void
     {
-        throw new Exception("Something failed");
+        CoreComponentBridge::loadCoreComponent($this->moodleRoot);
+        CoreComponentBridge::loadStandardLibraries();
     }
 }
