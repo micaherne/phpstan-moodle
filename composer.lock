@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "87ac494e2936b2e41d8cffe8edf83a87",
+    "content-hash": "41a77b4c25428aeab490405b0ddd8443",
     "packages": [
         {
             "name": "micaherne/moodle-analysis-utils",
@@ -12,7 +12,7 @@
             "source": {
                 "type": "git",
                 "url": "../moodle-analysis-utils",
-                "reference": "e328e4659c0da96de6d65f532bf48af6327c445a"
+                "reference": "10f112fd4d92a2b02fd3064e5b3644f1506a7a9f"
             },
             "require": {
                 "ext-simplexml": "*",
@@ -27,7 +27,12 @@
             "type": "library",
             "autoload": {
                 "psr-4": {
-                    "MoodleAnalysisUtils\\": "src/"
+                    "MoodleAnalysis\\": "src/"
+                }
+            },
+            "autoload-dev": {
+                "psr-4": {
+                    "MoodleAnalysis\\": "tests/"
                 }
             },
             "scripts": {
@@ -52,7 +57,45 @@
                 }
             ],
             "description": "Utilities for helping with static analysis of Moodle code",
-            "time": "2024-03-08T23:45:29+00:00"
+            "time": "2024-03-09T15:52:04+00:00"
+        },
+        {
+            "name": "micaherne/phpstan-classalias",
+            "version": "dev-main",
+            "source": {
+                "type": "git",
+                "url": "../phpstan-classalias",
+                "reference": "f827ee00a7b33308c9808044264d8967916c7d8c"
+            },
+            "require-dev": {
+                "phpstan/phpstan": "^1.10",
+                "phpunit/phpunit": "^11.0"
+            },
+            "default-branch": true,
+            "type": "phpstan-plugin",
+            "extra": {
+                "phpstan": {
+                    "includes": [
+                        "extension.neon"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "PhpstanClassAlias\\": "src/"
+                }
+            },
+            "license": [
+                "GPL-3.0-or-later"
+            ],
+            "authors": [
+                {
+                    "name": "Michael Aherne",
+                    "email": "micaherne@blueyonder.co.uk"
+                }
+            ],
+            "description": "Static class aliasing for PHPStan",
+            "time": "2024-03-10T16:07:24+00:00"
         }
     ],
     "packages-dev": [
@@ -292,6 +335,50 @@
             "time": "2022-02-21T01:04:05+00:00"
         },
         {
+            "name": "phpstan/extension-installer",
+            "version": "1.3.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/phpstan/extension-installer.git",
+                "reference": "f45734bfb9984c6c56c4486b71230355f066a58a"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/phpstan/extension-installer/zipball/f45734bfb9984c6c56c4486b71230355f066a58a",
+                "reference": "f45734bfb9984c6c56c4486b71230355f066a58a",
+                "shasum": ""
+            },
+            "require": {
+                "composer-plugin-api": "^2.0",
+                "php": "^7.2 || ^8.0",
+                "phpstan/phpstan": "^1.9.0"
+            },
+            "require-dev": {
+                "composer/composer": "^2.0",
+                "php-parallel-lint/php-parallel-lint": "^1.2.0",
+                "phpstan/phpstan-strict-rules": "^0.11 || ^0.12 || ^1.0"
+            },
+            "type": "composer-plugin",
+            "extra": {
+                "class": "PHPStan\\ExtensionInstaller\\Plugin"
+            },
+            "autoload": {
+                "psr-4": {
+                    "PHPStan\\ExtensionInstaller\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "Composer plugin for automatic installation of PHPStan extensions",
+            "support": {
+                "issues": "https://github.com/phpstan/extension-installer/issues",
+                "source": "https://github.com/phpstan/extension-installer/tree/1.3.1"
+            },
+            "time": "2023-05-24T08:59:17+00:00"
+        },
+        {
             "name": "phpstan/phpstan",
             "version": "1.10.60",
             "source": {
@@ -355,16 +442,16 @@
         },
         {
             "name": "phpunit/php-code-coverage",
-            "version": "11.0.1",
+            "version": "11.0.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/php-code-coverage.git",
-                "reference": "89702be0ad026873ef3a1605fe8726254eef4e2c"
+                "reference": "9e0a298b4dc6438a1e70ac8e1b3ea4980ae5a09b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/php-code-coverage/zipball/89702be0ad026873ef3a1605fe8726254eef4e2c",
-                "reference": "89702be0ad026873ef3a1605fe8726254eef4e2c",
+                "url": "https://api.github.com/repos/sebastianbergmann/php-code-coverage/zipball/9e0a298b4dc6438a1e70ac8e1b3ea4980ae5a09b",
+                "reference": "9e0a298b4dc6438a1e70ac8e1b3ea4980ae5a09b",
                 "shasum": ""
             },
             "require": {
@@ -421,7 +508,7 @@
             "support": {
                 "issues": "https://github.com/sebastianbergmann/php-code-coverage/issues",
                 "security": "https://github.com/sebastianbergmann/php-code-coverage/security/policy",
-                "source": "https://github.com/sebastianbergmann/php-code-coverage/tree/11.0.1"
+                "source": "https://github.com/sebastianbergmann/php-code-coverage/tree/11.0.2"
             },
             "funding": [
                 {
@@ -429,7 +516,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2024-03-02T07:34:25+00:00"
+            "time": "2024-03-09T16:56:49+00:00"
         },
         {
             "name": "phpunit/php-file-iterator",
@@ -1809,7 +1896,8 @@
     "aliases": [],
     "minimum-stability": "stable",
     "stability-flags": {
-        "micaherne/moodle-analysis-utils": 20
+        "micaherne/moodle-analysis-utils": 20,
+        "micaherne/phpstan-classalias": 20
     },
     "prefer-stable": false,
     "prefer-lowest": false,
