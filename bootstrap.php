@@ -7,4 +7,4 @@ use MoodlePhpstan\MoodleRootManager;
 /** @var MoodleRootManager $moodleManager */
 $moodleManager = $container->getService('moodleRootManager');
 
-$moodleManager->fail();
+$moodleManager->createAliases();
