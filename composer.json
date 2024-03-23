@@ -2,12 +2,6 @@
   "name": "micaherne/phpstan-moodle",
   "description": "Rules and utilities for using PHPStan on Moodle code.",
   "type": "phpstan-extension",
-  "repositories": [
-    {
-      "type": "vcs",
-      "url": "../moodle-analysis"
-    }
-  ],
   "require": {
     "micaherne/moodle-analysis": "dev-main"
   },
