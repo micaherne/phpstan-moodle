@@ -1,8 +1,5 @@
 parameters:
 
-	moodle:
-		addAliasesForRenamedClasses: true
-
 	scanDirectories: [ %moodle.rootDirectory% ]
 
 	treatPhpDocTypesAsCertain: false
@@ -18,6 +15,5 @@ services:
 
 parametersSchema:
 	moodle: structure([
-		rootDirectory: string(),
-		addAliasesForRenamedClasses: bool()
+		rootDirectory: string()
 	])
