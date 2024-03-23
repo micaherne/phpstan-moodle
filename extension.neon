@@ -15,11 +15,9 @@ services:
 		class: MoodlePhpstan\MoodleRootManager
 		arguments:
 			moodleRoot: %moodle.rootDirectory%
-			moodleVersion: %moodle.version%
 
 parametersSchema:
 	moodle: structure([
 		rootDirectory: string(),
-		version: string(),
 		addAliasesForRenamedClasses: bool()
 	])

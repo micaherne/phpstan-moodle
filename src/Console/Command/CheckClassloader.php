@@ -6,12 +6,8 @@ use Composer\Semver\Comparator;
 use Composer\Semver\VersionParser;
 use MoodleAnalysis\Codebase\MoodleCloneProvider;
 use MoodleAnalysis\Console\Process\ProcessUtil;
-use MoodlePhpstan\Console\Worker\GenerateClassAliasBootstrapWorker;
-use PhpParser\BuilderFactory;
-use PhpParser\Node\Expr\FuncCall;
-use PhpParser\NodeFinder;
-use PhpParser\ParserFactory;
-use PhpParser\PrettyPrinter\Standard;
+use MoodlePhpstan\Console\Worker\CheckClassloaderWorker;
+use Psr\Log\LoggerInterface;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Helper\ProcessHelper;
@@ -20,41 +16,40 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Logger\ConsoleLogger;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Filesystem\Filesystem;
-use Symfony\Component\Finder\Finder;
 use Symfony\Component\Process\Process;
 
 #[AsCommand(
-    name: 'generate:class-alias-bootstrap',
-    description: 'Generate class alias bootstrap files',
+    name: 'check:classloader',
+    description: 'Check classloader will load all classes and aliased classes',
 )]
-class GenerateClassAliasBootstrap extends Command
+class CheckClassloader extends Command
 {
     #[\Override] protected function configure(): void
     {
         $this->addArgument('moodle-repo', InputArgument::OPTIONAL, 'The path to the Moodle repository')
-            ->addArgument('output', InputArgument::OPTIONAL, 'The path to the output file')
             ->addOption('worker', 'w', InputOption::VALUE_NONE, 'Run as worker');
     }
 
 
     #[\Override] protected function execute(InputInterface $input, OutputInterface $output): int
     {
+        $logger = new ConsoleLogger($output);
         $isWorker = (bool) $input->getOption('worker');
         if ($isWorker) {
-            return $this->executeWorker($input, $output);
+            return $this->executeWorker($input, $logger);
         }
 
-        $output->writeln("Cloning Moodle...");
+        // Ensure git and composer are installed in the path.
+        /*if (exec('git --version') !== 0 || exec('composer --version') !== 0) {
+            $output->writeln("Please ensure git and composer are installed and in the path.");
+            return Command::FAILURE;
+        }*/
+
+        $logger->info("Cloning Moodle...");
         $cloner = new MoodleCloneProvider();
         $clone = $cloner->cloneMoodle();
 
         $earliestTagOfInterest = 'v4.1.0';
-
-        $fs = new Filesystem();
-
-        $renamedClassesDirectory = __DIR__ . '/../../../resources/bootstrap-class-aliases';
-        $fs->mkdir($renamedClassesDirectory);
 
         $tags = $clone->getTags();
 
@@ -62,9 +57,12 @@ class GenerateClassAliasBootstrap extends Command
             && VersionParser::parseStability($tag) === 'stable');
 
         foreach ($filteredTags as $tag) {
-            $output->writeln("Checking out $tag");
+            $logger->info("Checking out $tag");
             $clone->clean();
             $clone->checkout($tag);
+
+            $composerProcess = new Process(['composer', 'install', '--no-interaction'], $clone->getPath());
+            $composerProcess->mustRun();
 
             // Spawn new processes to work with the checked out code.
             // This is necessary as we can only load core_component once per process.
@@ -76,34 +74,30 @@ class GenerateClassAliasBootstrap extends Command
                 ...ProcessUtil::getPhpCommand(),
                 ...$_SERVER['argv'],
                 '--worker',
-                $clone->getPath(),
-                "$renamedClassesDirectory/$tag.php"
+                $clone->getPath()
             ];
 
-            $output->writeln("Running worker for $tag");
+            $logger->debug("Running worker for $tag");
             $process = $processHelper->run($output, new Process($commandParts, timeout: null));
             $output->writeln($process->getErrorOutput());
             $output->writeln($process->getOutput());
         }
 
+        $clone->delete();
+
         return Command::SUCCESS;
     }
 
-    private function executeWorker(InputInterface $input, OutputInterface $output): int
+    private function executeWorker(InputInterface $input, LoggerInterface $logger): int
     {
         $repoLocation = $input->getArgument('moodle-repo');
-        $outputFile = $input->getArgument('output');
 
         if (!is_dir($repoLocation)) {
             throw new \InvalidArgumentException('The Moodle repository does not exist');
         }
 
-        if (!is_writable(dirname((string) $outputFile))) {
-            throw new \InvalidArgumentException('The output file is not writable');
-        }
-
-        $worker = new GenerateClassAliasBootstrapWorker();
-        return $worker->run($repoLocation, $outputFile, new ConsoleLogger($output));
+        $worker = new CheckClassloaderWorker();
+        return $worker->run($repoLocation, $logger);
     }
 
 

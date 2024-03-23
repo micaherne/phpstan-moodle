@@ -8,7 +8,7 @@ use MoodleAnalysis\Component\CoreComponentBridge;
 
 class MoodleRootManager
 {
-    public function __construct(private string $moodleRoot, private string $moodleVersion) {
+    public function __construct(private string $moodleRoot) {
         if (!is_dir($this->moodleRoot) || !file_exists($this->moodleRoot . '/lib/components.json')) {
             throw new InvalidArgumentException("Moodle root does not exist or is not a valid Moodle codebase");
         }
@@ -17,14 +17,10 @@ class MoodleRootManager
         }
     }
 
-    public function createAliases(): void
-    {
+    public function initialise(): void {
         CoreComponentBridge::loadCoreComponent($this->moodleRoot);
         CoreComponentBridge::registerClassloader();
         CoreComponentBridge::loadStandardLibraries();
-        require_once __DIR__ . '/../resources/bootstrap-class-aliases/' . $this->moodleVersion . '.php';
-
-        // Remove classloader so that PHPStan does not try to use it to find classes.
-        CoreComponentBridge::unregisterClassloader();
+        CoreComponentBridge::fixClassloader();
     }
 }
