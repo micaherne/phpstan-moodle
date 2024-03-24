@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "bad4e189a51d1892c54ebfffe376aba8",
+    "content-hash": "df811aba3c88f4b16256305dff50d717",
     "packages": [
         {
             "name": "composer/semver",
@@ -92,13 +92,20 @@
             "version": "dev-main",
             "source": {
                 "type": "git",
-                "url": "../moodle-analysis",
-                "reference": "85eb448464ae545bfd988cd44d548139da56d292"
+                "url": "https://github.com/micaherne/moodle-analysis.git",
+                "reference": "d4a04f7d2be86bc0acc8540a737c04038b2c1fd9"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/micaherne/moodle-analysis/zipball/d4a04f7d2be86bc0acc8540a737c04038b2c1fd9",
+                "reference": "d4a04f7d2be86bc0acc8540a737c04038b2c1fd9",
+                "shasum": ""
             },
             "require": {
                 "composer/semver": "^3.4",
                 "ext-simplexml": "*",
-                "php": "^8.3"
+                "php": "^8.3",
+                "psr/log": "^3.0"
             },
             "require-dev": {
                 "nikic/php-parser": "^5.0",
@@ -117,22 +124,7 @@
                     "MoodleAnalysis\\": "src/"
                 }
             },
-            "autoload-dev": {
-                "psr-4": {
-                    "MoodleAnalysis\\": "tests/"
-                }
-            },
-            "scripts": {
-                "phpstan": [
-                    "vendor/bin/phpstan analyse"
-                ],
-                "rector": [
-                    "vendor/bin/rector process"
-                ],
-                "tests": [
-                    "vendor/bin/phpunit tests"
-                ]
-            },
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "GPL-3.0-or-later"
             ],
@@ -144,7 +136,61 @@
                 }
             ],
             "description": "Utilities for helping with static analysis of Moodle code, and various extracted data.",
-            "time": "2024-03-23T14:30:29+00:00"
+            "support": {
+                "issues": "https://github.com/micaherne/moodle-analysis/issues",
+                "source": "https://github.com/micaherne/moodle-analysis/tree/main"
+            },
+            "time": "2024-03-24T13:42:36+00:00"
+        },
+        {
+            "name": "psr/log",
+            "version": "3.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/php-fig/log.git",
+                "reference": "fe5ea303b0887d5caefd3d431c3e61ad47037001"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/php-fig/log/zipball/fe5ea303b0887d5caefd3d431c3e61ad47037001",
+                "reference": "fe5ea303b0887d5caefd3d431c3e61ad47037001",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=8.0.0"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "3.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Psr\\Log\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "PHP-FIG",
+                    "homepage": "https://www.php-fig.org/"
+                }
+            ],
+            "description": "Common interface for logging libraries",
+            "homepage": "https://github.com/php-fig/log",
+            "keywords": [
+                "log",
+                "psr",
+                "psr-3"
+            ],
+            "support": {
+                "source": "https://github.com/php-fig/log/tree/3.0.0"
+            },
+            "time": "2021-07-14T16:46:02+00:00"
         }
     ],
     "packages-dev": [
@@ -920,56 +966,6 @@
                 "source": "https://github.com/php-fig/container/tree/2.0.2"
             },
             "time": "2021-11-05T16:47:00+00:00"
-        },
-        {
-            "name": "psr/log",
-            "version": "3.0.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/php-fig/log.git",
-                "reference": "fe5ea303b0887d5caefd3d431c3e61ad47037001"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/php-fig/log/zipball/fe5ea303b0887d5caefd3d431c3e61ad47037001",
-                "reference": "fe5ea303b0887d5caefd3d431c3e61ad47037001",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=8.0.0"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "3.x-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Psr\\Log\\": "src"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "PHP-FIG",
-                    "homepage": "https://www.php-fig.org/"
-                }
-            ],
-            "description": "Common interface for logging libraries",
-            "homepage": "https://github.com/php-fig/log",
-            "keywords": [
-                "log",
-                "psr",
-                "psr-3"
-            ],
-            "support": {
-                "source": "https://github.com/php-fig/log/tree/3.0.0"
-            },
-            "time": "2021-07-14T16:46:02+00:00"
         },
         {
             "name": "rector/rector",
@@ -2775,7 +2771,9 @@
     },
     "prefer-stable": false,
     "prefer-lowest": false,
-    "platform": [],
+    "platform": {
+        "php": "^8.0"
+    },
     "platform-dev": [],
     "plugin-api-version": "2.6.0"
 }
