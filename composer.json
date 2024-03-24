@@ -3,6 +3,7 @@
   "description": "Rules and utilities for using PHPStan on Moodle code.",
   "type": "phpstan-extension",
   "require": {
+    "php": "^8.0",
     "micaherne/moodle-analysis": "dev-main"
   },
   "require-dev": {
@@ -39,5 +40,9 @@
     "allow-plugins": {
       "phpstan/extension-installer": true
     }
+  },
+  "scripts": {
+    "phpstan": "vendor/bin/phpstan analyse",
+    "rector": "vendor/bin/rector process"
   }
 }
