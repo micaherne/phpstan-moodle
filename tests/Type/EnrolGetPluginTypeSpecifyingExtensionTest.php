@@ -11,6 +11,9 @@ use PHPUnit\Framework\Attributes\DataProvider;
 class EnrolGetPluginTypeSpecifyingExtensionTest extends TypeInferenceTestCase
 {
 
+    /**
+     * @return iterable<string, mixed[]>
+     */
     public static function dataFileAsserts(): iterable
     {
         yield from self::gatherAssertTypes(__DIR__ . '/data/enrol_get_plugin1.php');

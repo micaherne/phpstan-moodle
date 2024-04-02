@@ -4,3 +4,6 @@ parameters:
     paths:
         - src
         - tests
+    excludePaths:
+        - tests/data/*
+        - tests/*/data/*

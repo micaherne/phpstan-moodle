@@ -11,6 +11,9 @@ use PHPUnit\Framework\Attributes\DataProvider;
 class GetAuthPluginTypeSpecifyingExtensionTest extends TypeInferenceTestCase
 {
 
+    /**
+     * @return iterable<string, mixed[]>
+     */
     public static function dataFileAsserts(): iterable
     {
         yield from self::gatherAssertTypes(__DIR__ . '/data/get_auth_plugin1.php');

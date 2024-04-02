@@ -23,7 +23,7 @@ class GetAuthPluginTypeSpecifyingExtension implements DynamicFunctionReturnTypeE
         FuncCall $functionCall,
         Scope $scope
     ): ?Type {
-        if (count($functionCall->getArgs()) === 0) {
+        if ($functionCall->getArgs() === []) {
             return null;
         }
         $arg1 = $functionCall->getArgs()[0]->value;
@@ -31,6 +31,7 @@ class GetAuthPluginTypeSpecifyingExtension implements DynamicFunctionReturnTypeE
             return null;
         }
 
+        // The function throws an exception if the plugin type is not found so it is never null.
         return new ObjectType('auth_plugin_' . $arg1->value);
     }
 }
