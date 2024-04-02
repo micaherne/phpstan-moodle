@@ -9,9 +9,19 @@ parameters:
 
 services:
 	moodleRootManager:
-		class: MoodlePhpstan\MoodleRootManager
+		class: PhpstanMoodle\MoodleRootManager
 		arguments:
 			moodleRoot: %moodle.rootDirectory%
+
+	-
+		class: PhpstanMoodle\Type\GetAuthPluginTypeSpecifyingExtension
+		tags:
+			- phpstan.broker.dynamicFunctionReturnTypeExtension
+
+	-
+		class: PhpstanMoodle\Type\EnrolGetPluginTypeSpecifyingExtension
+		tags:
+			- phpstan.broker.dynamicFunctionReturnTypeExtension
 
 parametersSchema:
 	moodle: structure([

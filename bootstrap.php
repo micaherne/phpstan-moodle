@@ -1,7 +1,7 @@
 <?php
 
 
-use MoodlePhpstan\MoodleRootManager;
+use PhpstanMoodle\MoodleRootManager;
 
 /** @var PHPStan\DependencyInjection\Container $container */
 /** @var MoodleRootManager $moodleManager */

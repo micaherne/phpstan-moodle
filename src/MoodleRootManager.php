@@ -1,6 +1,6 @@
 <?php
 
-namespace MoodlePhpstan;
+namespace PhpstanMoodle;
 
 use Exception;
 use InvalidArgumentException;

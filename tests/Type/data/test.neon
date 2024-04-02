@@ -1,0 +1,13 @@
+parameters:
+    bootstrapFiles:
+        - ../../data/moodlelib_fake.php
+        - ../../data/enrollib_fake.php
+services:
+	-
+		class: PhpstanMoodle\Type\GetAuthPluginTypeSpecifyingExtension
+		tags:
+			- phpstan.broker.dynamicFunctionReturnTypeExtension
+	-
+		class: PhpstanMoodle\Type\EnrolGetPluginTypeSpecifyingExtension
+		tags:
+			- phpstan.broker.dynamicFunctionReturnTypeExtension

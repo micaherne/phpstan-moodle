@@ -20,7 +20,12 @@
   "license": "GPL-3.0-or-later",
   "autoload": {
     "psr-4": {
-      "MoodlePhpstan\\": "src/"
+      "PhpstanMoodle\\": "src/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "PhpstanMoodle\\Test\\": "tests/"
     }
   },
   "authors": [
@@ -43,6 +48,7 @@
   },
   "scripts": {
     "phpstan": "vendor/bin/phpstan analyse",
-    "rector": "vendor/bin/rector process"
+    "rector": "vendor/bin/rector process",
+    "test":  "vendor/bin/phpunit tests"
   }
 }
