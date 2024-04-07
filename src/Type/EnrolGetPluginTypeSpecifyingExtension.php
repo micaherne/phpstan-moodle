@@ -33,6 +33,6 @@ class EnrolGetPluginTypeSpecifyingExtension implements DynamicFunctionReturnType
         }
 
         // The function returns null if the plugin is not found.
-        return new UnionType([new NullType(), new ObjectType('enrol_' . $arg1->value . '_plugin')]);
+        return new UnionType([new NullType(), new ObjectType('\enrol_' . $arg1->value . '_plugin')]);
     }
 }

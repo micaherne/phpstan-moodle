@@ -32,6 +32,6 @@ class GetAuthPluginTypeSpecifyingExtension implements DynamicFunctionReturnTypeE
         }
 
         // The function throws an exception if the plugin type is not found so it is never null.
-        return new ObjectType('auth_plugin_' . $arg1->value);
+        return new ObjectType('\auth_plugin_' . $arg1->value);
     }
 }

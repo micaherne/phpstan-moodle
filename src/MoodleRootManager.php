@@ -5,6 +5,7 @@ namespace PhpstanMoodle;
 use Exception;
 use InvalidArgumentException;
 use MoodleAnalysis\Component\CoreComponentBridge;
+use ReflectionException;
 
 class MoodleRootManager
 {
@@ -17,6 +18,9 @@ class MoodleRootManager
         }
     }
 
+    /**
+     * @throws ReflectionException
+     */
     public function initialise(): void {
         CoreComponentBridge::loadCoreComponent($this->moodleRoot);
         CoreComponentBridge::registerClassloader();
