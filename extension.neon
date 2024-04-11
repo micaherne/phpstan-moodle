@@ -10,6 +10,21 @@ parameters:
 	stubFiles:
 		- stubs/globals.stub
 
+	exceptions:
+		uncheckedExceptionClasses:
+			- moodle_exception
+
+	ignoreErrors:
+		-
+			message: '#^Variable (\$ADMIN|\$CFG|\$settings) might not be defined\.$#'
+			path: */settings.php
+			reportUnmatched: false
+
+		-
+			message: '#^Variable (\$plugin|\$module) might not be defined\.$#'
+			path: */version.php
+			reportUnmatched: false
+
 services:
 	moodleRootManager:
 		class: PhpstanMoodle\MoodleRootManager
