@@ -1,4 +1,0 @@
-<?php
-
-/** @var stdClass */
-global $CFG;
