@@ -9,6 +9,7 @@ use PHPStan\Reflection\FunctionReflection;
 use PHPStan\Type\DynamicFunctionReturnTypeExtension;
 use PHPStan\Type\NullType;
 use PHPStan\Type\ObjectType;
+use PHPStan\Type\Type;
 use PHPStan\Type\UnionType;
 
 class EnrolGetPluginTypeSpecifyingExtension implements DynamicFunctionReturnTypeExtension
@@ -23,7 +24,7 @@ class EnrolGetPluginTypeSpecifyingExtension implements DynamicFunctionReturnType
         FunctionReflection $functionReflection,
         FuncCall $functionCall,
         Scope $scope
-    ): ?\PHPStan\Type\Type {
+    ): ?Type {
         if ($functionCall->getArgs() === []) {
             return null;
         }
