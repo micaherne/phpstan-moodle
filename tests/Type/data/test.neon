@@ -2,6 +2,7 @@ parameters:
     bootstrapFiles:
         - ../../data/moodlelib_fake.php
         - ../../data/enrollib_fake.php
+        - ../../data/lib/testing/generator/data_generator_fake.php
 services:
 	-
 		class: PhpstanMoodle\Type\GetAuthPluginTypeSpecifyingExtension
@@ -11,3 +12,8 @@ services:
 		class: PhpstanMoodle\Type\EnrolGetPluginTypeSpecifyingExtension
 		tags:
 			- phpstan.broker.dynamicFunctionReturnTypeExtension
+
+	-
+		class: PhpstanMoodle\Type\GetPluginGeneratorTypeSpecifyingExtension
+		tags:
+			- phpstan.broker.dynamicMethodReturnTypeExtension

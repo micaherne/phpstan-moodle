@@ -7,16 +7,16 @@ parameters:
 	bootstrapFiles:
 		- bootstrap.php
 
-	stubFiles:
-		- stubs/globals.stub
-
 	exceptions:
 		uncheckedExceptionClasses:
 			- moodle_exception
 
 	ignoreErrors:
 		-
-			message: '#^Variable (\$ADMIN|\$CFG|\$settings) might not be defined\.$#'
+			message: '#^Variable (\$CFG|\$DB|\$OUTPUT|\$PAGE|\$USER) might not be defined\.$#'
+			reportUnmatched: false
+		-
+			message: '#^Variable (\$ADMIN|\$settings) might not be defined\.$#'
 			path: */settings.php
 			reportUnmatched: false
 
@@ -40,6 +40,11 @@ services:
 		class: PhpstanMoodle\Type\EnrolGetPluginTypeSpecifyingExtension
 		tags:
 			- phpstan.broker.dynamicFunctionReturnTypeExtension
+
+	-
+		class: PhpstanMoodle\Type\GetPluginGeneratorTypeSpecifyingExtension
+		tags:
+			- phpstan.broker.dynamicMethodReturnTypeExtension
 
 parametersSchema:
 	moodle: structure([
