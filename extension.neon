@@ -7,21 +7,24 @@ parameters:
 	bootstrapFiles:
 		- bootstrap.php
 
+	stubFiles:
+		- stubs/core_message.stub
+
 	exceptions:
 		uncheckedExceptionClasses:
 			- moodle_exception
 
 	ignoreErrors:
 		-
-			message: '#^Variable (\$CFG|\$DB|\$OUTPUT|\$PAGE|\$USER) might not be defined\.$#'
+			message: '#^Variable (?:\$CFG|\$COURSE|\$DB|\$OUTPUT|\$PAGE|\$SESSION|\$USER) might not be defined\.$#'
 			reportUnmatched: false
 		-
-			message: '#^Variable (\$ADMIN|\$settings) might not be defined\.$#'
+			message: '#^Variable (?:\$ADMIN|\$section|\$settings) might not be defined\.$#'
 			path: */settings.php
 			reportUnmatched: false
 
 		-
-			message: '#^Variable (\$plugin|\$module) might not be defined\.$#'
+			message: '#^Variable (?:\$plugin|\$module) might not be defined\.$#'
 			path: */version.php
 			reportUnmatched: false
 

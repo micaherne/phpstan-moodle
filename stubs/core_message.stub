@@ -1,0 +1,32 @@
+<?php
+
+namespace core\message;
+
+/**
+ * @property int $courseid
+ * @property string $modulename
+ * @property string $component
+ * @property string $name
+ * @property object|int $userfrom
+ * @property int $convid
+ * @property int $conversationtype
+ * @property object|int $userto
+ * @property string $subject
+ * @property string $fullmessage
+ * @property int $fullmessageformat
+ * @property string $fullmessagehtml
+ * @property string $smallmessage
+ * @property int $notification
+ * @property string $contexturl
+ * @property string $contexturlname
+ * @property string $replyto
+ * @property string $replytoname
+ * @property int $savedmessageid
+ * @property \stored_file $attachment
+ * @property string $attachname
+ * @property int $timecreated
+ * @property boolean $fullmessagetrust
+ * @property mixed $customdata
+ * @property boolean $anonymous
+ */
+class message {}
