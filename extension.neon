@@ -16,7 +16,7 @@ parameters:
 
 	ignoreErrors:
 		-
-			message: '#^Variable (?:\$CFG|\$COURSE|\$DB|\$OUTPUT|\$PAGE|\$SESSION|\$USER) might not be defined\.$#'
+			message: '#^Variable (?:\$CFG|\$COURSE|\$DB|\$OUTPUT|\$PAGE|\$SESSION|\$USER|\$SITE) might not be defined\.$#'
 			reportUnmatched: false
 		-
 			message: '#^Variable (?:\$ADMIN|\$section|\$settings) might not be defined\.$#'
