@@ -4,7 +4,6 @@
   "type": "phpstan-extension",
   "require": {
     "php": "^8.0",
-    "micaherne/moodle-analysis": "dev-main",
     "phpstan/phpstan": "^1.10"
   },
   "require-dev": {

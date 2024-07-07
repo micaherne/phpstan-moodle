@@ -3,9 +3,8 @@
 namespace PhpstanMoodle;
 
 use Exception;
-use file_exception;
 use InvalidArgumentException;
-use MoodleAnalysis\Component\CoreComponentBridge;
+use PhpstanMoodle\Moodle\CoreComponentBridge;
 use ReflectionException;
 
 class MoodleRootManager
@@ -34,8 +33,6 @@ class MoodleRootManager
 
     /**
      * Load some other files which create class aliases.
-     *
-     * @return void
      */
     public function loadOtherAliases(): void {
         // Global is necessary here as some of the included files
