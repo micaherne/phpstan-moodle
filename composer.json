@@ -3,7 +3,7 @@
   "description": "Rules and utilities for using PHPStan on Moodle code.",
   "type": "phpstan-extension",
   "require": {
-    "php": "^8.0",
+    "php": "^8.2",
     "phpstan/phpstan": "^1.10"
   },
   "require-dev": {
