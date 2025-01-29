@@ -220,6 +220,9 @@ final class CoreComponentBridge
      * for example where they extend a class that is not autoloaded. (This is not a problem
      * in Moodle itself, where the relevant includes have been done before the class is
      * loaded.)
+     *
+     * It's probably unfair to call this "fix" classloader, as there's nothing wrong with it,
+     * but it's a concise and descriptive enough name :)
      */
     public static function fixClassloader(): void
     {
@@ -234,6 +237,7 @@ final class CoreComponentBridge
 
         foreach (
             [
+                '/lib/formslib.php',
                 '/lib/adminlib.php',
                 '/lib/phpunit/classes/base_testcase.php',
                 '/lib/phpunit/classes/advanced_testcase.php',
@@ -241,15 +245,42 @@ final class CoreComponentBridge
                 // Required for 4.1 but not 4.2 onwards.
                 '/lib/editor/tinymce/plugins/spellchecker/classes/SpellChecker.php',
                 // Separate autoloader for pdf library.
-                '/mod/assign/feedback/editpdf/fpdi/autoload.php'
+                '/mod/assign/feedback/editpdf/fpdi/autoload.php',
+                // Autoloader for SimplePie (which has many class aliases)
+                '/lib/simplepie/moodle_simplepie.php',
+                '/mod/quiz/tests/classes/question_helper_test_trait.php',
+                '/mod/assign/tests/fixtures/testable_assign.php',
             ] as $file
         ) {
             if (file_exists($CFG->dirroot . $file)) {
                 require_once $CFG->dirroot . $file;
             }
         }
-
     }
+
+    public static function addMissingClassAliasDeclarations(): void {
+        global $CFG;
+
+        $files = [
+            '/competency/classes/persistent.php',
+            '/cache/classes/dummy_cachestore.php',
+            '/lib/badgeslib.php',
+            '/lib/behat/classes/behat_session_trait.php',
+            '/lib/behat/extension/Moodle/BehatExtension/ServiceContainer/BehatExtension.php',
+            '/lib/editor/tiny/lib.php',
+            '/lib/externallib.php',
+            '/lib/phpxmlrpc/Exception/PhpXmlrpcException.php',
+            '/mod/assign/tests/base_test.php',
+            '/mod/quiz/tests/quiz_question_helper_test_trait.php',
+        ];
+
+        foreach ($files as $file) {
+            if (file_exists($CFG->dirroot . $file)) {
+                require_once $CFG->dirroot . $file;
+            }
+        }
+    }
+
 
     /**
      * Get the Moodle config object.
@@ -259,7 +290,8 @@ final class CoreComponentBridge
      *
      * @return stdClass the Moodle $CFG object
      */
-    public static function getConfig(): stdClass {
+    public static function getConfig(): stdClass
+    {
         global $CFG;
         return $CFG;
     }

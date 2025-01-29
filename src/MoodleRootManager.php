@@ -28,29 +28,7 @@ class MoodleRootManager
         CoreComponentBridge::registerClassloader();
         CoreComponentBridge::loadStandardLibraries();
         CoreComponentBridge::fixClassloader();
-        $this->loadOtherAliases();
+        CoreComponentBridge::addMissingClassAliasDeclarations();
     }
 
-    /**
-     * Load some other files which create class aliases.
-     */
-    public function loadOtherAliases(): void {
-        // Global is necessary here as some of the included files
-        // may use it.
-        global $CFG;
-
-        foreach (
-            [
-                'lib/badgeslib.php',
-                'lib/classes/plugin_manager.php',
-                'lib/editor/tiny/lib.php',
-                'lib/phpxmlrpc/Exception/PhpXmlrpcException.php',
-                'mod/assign/tests/base_test.php',
-            ] as $file
-        ) {
-            if (file_exists($CFG->dirroot . '/' . $file)) {
-                require_once $CFG->dirroot . '/' . $file;
-            }
-        }
-    }
 }
