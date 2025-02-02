@@ -245,7 +245,7 @@ final class CoreComponentBridge
                 // Required for 4.1 but not 4.2 onwards.
                 '/lib/editor/tinymce/plugins/spellchecker/classes/SpellChecker.php',
                 // Separate autoloader for pdf library.
-                '/mod/assign/feedback/editpdf/fpdi/autoload.php',
+                '/lib/pdflib.php',
                 // Autoloader for SimplePie (which has many class aliases)
                 '/lib/simplepie/moodle_simplepie.php',
                 '/mod/quiz/tests/classes/question_helper_test_trait.php',
