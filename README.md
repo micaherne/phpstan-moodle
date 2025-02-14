@@ -40,7 +40,7 @@ parameters:
 
 ```
 
-The rootDirectory parameter *must* be an absolute path.
+The rootDirectory parameter *must* be an absolute path. Also, `composer install` must have been run in the Moodle root directory to create the vendor directory.
 
 ## Technical details
 ### Why this plugin exists
