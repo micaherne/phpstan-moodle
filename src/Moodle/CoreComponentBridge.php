@@ -250,6 +250,9 @@ final class CoreComponentBridge
                 '/lib/simplepie/moodle_simplepie.php',
                 '/mod/quiz/tests/classes/question_helper_test_trait.php',
                 '/mod/assign/tests/fixtures/testable_assign.php',
+
+                // Other files that are not required for core but contain useful base classes etc.
+                '/grade/report/lib.php'
             ] as $file
         ) {
             if (file_exists($CFG->dirroot . $file)) {
