@@ -1,0 +1,4 @@
+{
+    "name": "PhpStan for Moodle",
+    "image": "composer:2.8.12"
+}
