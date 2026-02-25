@@ -186,6 +186,9 @@ final class CoreComponentBridge
         require_once($CFG->libdir . '/editorlib.php');       // All text editor related functions and classes
         require_once($CFG->libdir . '/messagelib.php');      // Messagelib functions
         require_once($CFG->libdir . '/modinfolib.php');      // Cached information on course-module instances
+        require_once($CFG->dirroot . '/backup/util/includes/backup_includes.php');
+        require_once($CFG->dirroot . '/backup/util/includes/convert_includes.php');
+        require_once($CFG->dirroot . '/backup/util/includes/restore_includes.php');
 
         // Removed in 4.5.
         if (file_exists($CFG->dirroot . '/cache/lib.php')) {
