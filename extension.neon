@@ -28,11 +28,15 @@ parameters:
 			path: */version.php
 			reportUnmatched: false
 
+	moodle:
+	    addCommonIncludes: true
+
 services:
 	moodleRootManager:
 		class: PhpstanMoodle\MoodleRootManager
 		arguments:
 			moodleRoot: %moodle.rootDirectory%
+			addCommonIncludes: %moodle.addCommonIncludes%
 
 	-
 		class: PhpstanMoodle\Type\GetAuthPluginTypeSpecifyingExtension
@@ -51,5 +55,6 @@ services:
 
 parametersSchema:
 	moodle: structure([
-		rootDirectory: string()
+		rootDirectory: string(),
+		addCommonIncludes: bool()
 	])

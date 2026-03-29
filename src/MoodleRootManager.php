@@ -9,7 +9,7 @@ use ReflectionException;
 
 class MoodleRootManager
 {
-    public function __construct(private string $moodleRoot)
+    public function __construct(private string $moodleRoot, private bool $addCommonIncludes)
     {
         if (!is_dir($this->moodleRoot) || !file_exists($this->moodleRoot . '/lib/components.json')) {
             throw new InvalidArgumentException("Moodle root does not exist or is not a valid Moodle codebase");
@@ -29,6 +29,9 @@ class MoodleRootManager
         CoreComponentBridge::loadStandardLibraries();
         CoreComponentBridge::fixClassloader();
         CoreComponentBridge::addMissingClassAliasDeclarations();
+        if ($this->addCommonIncludes) {
+            CoreComponentBridge::addCommonIncludes();
+        }
     }
 
 }

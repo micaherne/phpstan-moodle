@@ -264,9 +264,7 @@ final class CoreComponentBridge
                 '/lib/simplepie/moodle_simplepie.php',
                 '/mod/quiz/tests/classes/question_helper_test_trait.php',
                 '/mod/assign/tests/fixtures/testable_assign.php',
-                
-                // Other files that are not required for core but contain useful base classes etc.
-                '/grade/report/lib.php',
+
             ] as $file
         ) {
             if (file_exists($CFG->dirroot . $file)) {
@@ -306,6 +304,26 @@ final class CoreComponentBridge
         ];
 
         foreach ($files as $file) {
+            if (file_exists($CFG->dirroot . $file)) {
+                require_once $CFG->dirroot . $file;
+            }
+        }
+    }
+
+    public static function addCommonIncludes(): void
+    {
+        global $CFG;
+
+        foreach (
+            [   
+                '/backup/util/includes/backup_includes.php',
+                '/backup/util/includes/convert_includes.php',
+                '/backup/util/includes/restore_includes.php',
+                '/blocks/moodleblock.class.php',   
+                '/grade/report/lib.php',
+                '/lib/filelib.php',
+            ] as $file
+        ) {
             if (file_exists($CFG->dirroot . $file)) {
                 require_once $CFG->dirroot . $file;
             }
