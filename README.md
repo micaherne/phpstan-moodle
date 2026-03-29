@@ -42,6 +42,21 @@ parameters:
 
 The rootDirectory parameter *must* be an absolute path. Also, `composer install` must have been run in the Moodle root directory to create the vendor directory.
 
+### Common includes
+
+There is another parameter available - addCommonIncludes. This defaults to true and controls whether the plugin
+will add common includes, such as libraries like grade/lib.php and other non-autoloaded classes. These are not 
+required for the coverage of the autoloadable classes and aliases that are this plugin's main focus, but they
+help to avoid missing classes that are often implicitly included when Moodle runs. If you would like not to load
+these, set addCommonIncludes to false:
+
+```neon
+parameters:
+    moodle:
+        rootDirectory: /path/to/moodle
+        addCommonIncludes: false
+```
+
 ## Technical details
 ### Why this plugin exists
 PHPStan has excellent functionality for scanning code for classes and other symbols but this is not sufficient for use with Moodle. This is due to [PHPStan's handling of class aliases](https://phpstan.org/user-guide/discovering-symbols#class-aliases), which are heavily used by Moodle. For PHPStan to be aware of class aliases these must actually exist at runtime, which means that the aliased class must also be loadable. This plugin bootstraps the Moodle classloader and sets up (most of) the aliases in the codebase so that PHPStan can understand them.
