@@ -2,10 +2,11 @@
 
 namespace PhpstanMoodle\Moodle;
 
-use ReflectionClass;
+use core_h5p\local\library\autoloader;
 use ReflectionMethod;
 use RuntimeException;
 use stdClass;
+use MoodleAnalysis\Codebase\MoodleClone;
 
 /**
  * Loads the core component class from Moodle.
@@ -18,7 +19,7 @@ use stdClass;
 final class CoreComponentBridge
 {
     /** @phpstan-ignore-next-line core_component is loaded from Moodle */
-    private static ReflectionClass $componentReflection;
+    private static \ReflectionClass $componentReflection;
 
     /** @var array<string, string> */
     private static array $classmap;
@@ -61,6 +62,13 @@ final class CoreComponentBridge
 
         self::$moodleRoot = $moodleRootReal;
 
+        // If the Moodle clone has a public directory, we need to adjust the root to be that, as that's where the lib and other directories are.
+        $root = self::$moodleRoot;
+
+        if (MoodleClone::hasPublicDir(self::$moodleRoot)) {
+            self::$moodleRoot .= '/public';
+        }
+
         // It may have been loaded some other way.
         if (class_exists('\core_component', false)) {
             throw new RuntimeException('Core component already loaded');
@@ -70,6 +78,7 @@ final class CoreComponentBridge
         defined('MOODLE_INTERNAL') || define('MOODLE_INTERNAL', true);
 
         $CFG = (object)[
+            'root' => $root,
             'dirroot' => self::$moodleRoot,
             'wwwroot' => 'https://localhost',
             'dataroot' => sys_get_temp_dir(),
@@ -172,7 +181,11 @@ final class CoreComponentBridge
         require_once($CFG->libdir . '/ajax/ajaxlib.php');    // Functions for managing our use of JavaScript and YUI
         require_once($CFG->libdir . '/weblib.php');          // Functions relating to HTTP and content
         require_once($CFG->libdir . '/outputlib.php');       // Functions for generating output
-        require_once($CFG->libdir . '/navigationlib.php');   // Class for generating Navigation structure
+        // Deprecated in 5.1 (throws an exception on inclusion)
+        // This is a very poor check but we would need to parse version.php to do it properly.
+        if (sha1_file($CFG->dirroot . '/lib/navigationlib.php') !== '2c831f3d5a36c0696765d41e708d5d34a3b1faa3') {
+             require_once($CFG->libdir . '/navigationlib.php');   // Class for generating Navigation structure
+        }
         require_once($CFG->libdir . '/dmllib.php');          // Database access
         require_once($CFG->libdir . '/datalib.php');         // Legacy lib with a big-mix of functions.
         require_once($CFG->libdir . '/accesslib.php');       // Access control functions
@@ -191,6 +204,8 @@ final class CoreComponentBridge
         if (file_exists($CFG->dirroot . '/cache/lib.php')) {
             require_once($CFG->dirroot . '/cache/lib.php');       // Cache API
         }
+
+
     }
 
     /**
@@ -208,7 +223,7 @@ final class CoreComponentBridge
 
         $autoloaders = spl_autoload_functions();
         spl_autoload_unregister($autoloaders[0]);
-        require_once $CFG->dirroot . '/vendor/autoload.php';
+        require_once $CFG->root . '/vendor/autoload.php';
 
         foreach ($autoloaders as $autoloader) {
             spl_autoload_register($autoloader);
@@ -229,36 +244,37 @@ final class CoreComponentBridge
         global $CFG;
 
         // Other autoloaders required.
-        if (class_exists('core_h5p\local\library\autoloader')) {
-            \core_h5p\local\library\autoloader::register();
+        if (class_exists(autoloader::class)) {
+            autoloader::register();
         }
 
         self::insertMoodleAutoloader();
 
         foreach (
             [
-                '/lib/formslib.php',
                 '/lib/adminlib.php',
+                '/lib/formslib.php',
                 '/lib/phpunit/classes/base_testcase.php',
                 '/lib/phpunit/classes/advanced_testcase.php',
                 '/enrol/locallib.php',
                 // Required for 4.1 but not 4.2 onwards.
                 '/lib/editor/tinymce/plugins/spellchecker/classes/SpellChecker.php',
                 // Separate autoloader for pdf library.
-                '/lib/pdflib.php',
+                '/mod/assign/feedback/editpdf/fpdi/autoload.php',
                 // Autoloader for SimplePie (which has many class aliases)
                 '/lib/simplepie/moodle_simplepie.php',
                 '/mod/quiz/tests/classes/question_helper_test_trait.php',
                 '/mod/assign/tests/fixtures/testable_assign.php',
-
+                
                 // Other files that are not required for core but contain useful base classes etc.
-                '/grade/report/lib.php'
+                '/grade/report/lib.php',
             ] as $file
         ) {
             if (file_exists($CFG->dirroot . $file)) {
                 require_once $CFG->dirroot . $file;
             }
         }
+
     }
 
     public static function addMissingClassAliasDeclarations(): void {
@@ -275,6 +291,19 @@ final class CoreComponentBridge
             '/lib/phpxmlrpc/Exception/PhpXmlrpcException.php',
             '/mod/assign/tests/base_test.php',
             '/mod/quiz/tests/quiz_question_helper_test_trait.php',
+            '/filter/classes/form/local_settings_form.php',
+
+            // These are to deal with the autoloading of test classes (see MDL-66903).
+            // It would be good to deal with them in the general sense.
+            '/lib/tests/classes/router/route_testcase.php',
+            '/lib/classes/tests/route_testcase.php',
+            '/lib/tests/classes/router/mocking_route_loader.php',
+            '/lib/tests/fixtures/router/mocking_route_loader.php',
+            '/lib/external/tests/classes/externallib_testcase.php',
+            '/reportbuilder/tests/classes/core_reportbuilder_testcase.php',
+            '/reportbuilder/tests/helpers.php',
+            '/mod/assign/tests/externallib_advanced_testcase.php',
+            '/webservice/tests/helpers.php',
         ];
 
         foreach ($files as $file) {
@@ -284,7 +313,6 @@ final class CoreComponentBridge
         }
     }
 
-
     /**
      * Get the Moodle config object.
      *
@@ -293,8 +321,7 @@ final class CoreComponentBridge
      *
      * @return stdClass the Moodle $CFG object
      */
-    public static function getConfig(): stdClass
-    {
+    public static function getConfig(): stdClass {
         global $CFG;
         return $CFG;
     }
@@ -336,6 +363,5 @@ final class CoreComponentBridge
     {
         return self::$classmaprenames;
     }
-
 
 }
