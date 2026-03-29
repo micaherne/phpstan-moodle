@@ -6,7 +6,6 @@ use core_h5p\local\library\autoloader;
 use ReflectionMethod;
 use RuntimeException;
 use stdClass;
-use MoodleAnalysis\Codebase\MoodleClone;
 
 /**
  * Loads the core component class from Moodle.
@@ -65,7 +64,7 @@ final class CoreComponentBridge
         // If the Moodle clone has a public directory, we need to adjust the root to be that, as that's where the lib and other directories are.
         $root = self::$moodleRoot;
 
-        if (MoodleClone::hasPublicDir(self::$moodleRoot)) {
+        if (file_exists(self::$moodleRoot . '/public')) {
             self::$moodleRoot .= '/public';
         }
 
