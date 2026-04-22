@@ -13,6 +13,7 @@ use PHPStan\Type\Type;
 class GetPluginGeneratorTypeSpecifyingExtension implements DynamicMethodReturnTypeExtension
 {
 
+    /** @return class-string */
     public function getClass(): string
     {
         return 'testing_data_generator';

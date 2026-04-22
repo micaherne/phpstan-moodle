@@ -7,3 +7,5 @@ parameters:
     excludePaths:
         - tests/data/*
         - tests/*/data/*
+    scanFiles:
+        - tests/data/lib/testing/generator/data_generator_fake.php
