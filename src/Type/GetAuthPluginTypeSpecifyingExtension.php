@@ -13,12 +13,12 @@ use PHPStan\Type\Type;
 class GetAuthPluginTypeSpecifyingExtension implements DynamicFunctionReturnTypeExtension
 {
 
-    #[\Override] public function isFunctionSupported(FunctionReflection $functionReflection): bool
+    public function isFunctionSupported(FunctionReflection $functionReflection): bool
     {
         return $functionReflection->getName() === 'get_auth_plugin';
     }
 
-    #[\Override] public function getTypeFromFunctionCall(
+    public function getTypeFromFunctionCall(
         FunctionReflection $functionReflection,
         FuncCall $functionCall,
         Scope $scope
