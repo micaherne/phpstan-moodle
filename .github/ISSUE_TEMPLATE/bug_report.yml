@@ -1,0 +1,46 @@
+name: Bug report
+description: Report a bug in phpstan-moodle
+title: "[Bug]: "
+labels:
+  - bug
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for reporting a bug.
+
+        If your issue is about GitHub's own UI (for example panel layout, file tree position, or AI/Copilot interface),
+        this repository cannot change that behaviour. Please use GitHub Support:
+        https://support.github.com/
+  - type: textarea
+    id: summary
+    attributes:
+      label: What happened?
+      description: Describe the phpstan-moodle behaviour that is broken.
+      placeholder: |
+        Expected ...
+        Actual ...
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce
+      placeholder: |
+        1. ...
+        2. ...
+        3. ...
+    validations:
+      required: true
+  - type: textarea
+    id: environment
+    attributes:
+      label: Environment
+      description: Provide versions and config details needed to reproduce.
+      placeholder: |
+        phpstan-moodle version:
+        PHP version:
+        PHPStan version:
+        Moodle version:
+    validations:
+      required: true
