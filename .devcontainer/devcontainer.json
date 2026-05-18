@@ -1,6 +1,6 @@
 {
     "name": "phpstan-moodle",
-    "image": "mcr.microsoft.com/devcontainers/php:8.4",
+    "image": "mcr.microsoft.com/devcontainers/php:8.5",
     "postCreateCommand": "composer install",
     "containerEnv": {
         "XDEBUG_MODE": "off"
