@@ -5,15 +5,15 @@ parameters:
         - ../../data/lib/testing/generator/data_generator_fake.php
 services:
 	-
-		class: PhpstanMoodle\Type\GetAuthPluginTypeSpecifyingExtension
+		class: PhpstanMoodle\Type\GetAuthPluginDynamicReturnTypeExtension
 		tags:
 			- phpstan.broker.dynamicFunctionReturnTypeExtension
 	-
-		class: PhpstanMoodle\Type\EnrolGetPluginTypeSpecifyingExtension
+		class: PhpstanMoodle\Type\EnrolGetPluginDynamicReturnTypeExtension
 		tags:
 			- phpstan.broker.dynamicFunctionReturnTypeExtension
 
 	-
-		class: PhpstanMoodle\Type\GetPluginGeneratorTypeSpecifyingExtension
+		class: PhpstanMoodle\Type\GetPluginGeneratorDynamicReturnTypeExtension
 		tags:
 			- phpstan.broker.dynamicMethodReturnTypeExtension

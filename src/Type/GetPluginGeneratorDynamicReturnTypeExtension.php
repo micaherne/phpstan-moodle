@@ -10,7 +10,7 @@ use PHPStan\Type\DynamicMethodReturnTypeExtension;
 use PHPStan\Type\ObjectType;
 use PHPStan\Type\Type;
 
-class GetPluginGeneratorTypeSpecifyingExtension implements DynamicMethodReturnTypeExtension
+class GetPluginGeneratorDynamicReturnTypeExtension implements DynamicMethodReturnTypeExtension
 {
 
     /** @return class-string */
