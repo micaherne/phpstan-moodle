@@ -3,12 +3,16 @@
 namespace PhpstanMoodle\Test\Type;
 
 use PHPStan\Testing\TypeInferenceTestCase;
+use PhpstanMoodle\Type\EnrolGetPluginTypeSpecifyingExtension;
 use PhpstanMoodle\Type\GetAuthPluginTypeSpecifyingExtension;
+use PhpstanMoodle\Type\GetPluginGeneratorTypeSpecifyingExtension;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\DataProvider;
 
+#[CoversClass(EnrolGetPluginTypeSpecifyingExtension::class)]
 #[CoversClass(GetAuthPluginTypeSpecifyingExtension::class)]
-class EnrolGetPluginTypeSpecifyingExtensionTest extends TypeInferenceTestCase
+#[CoversClass(GetPluginGeneratorTypeSpecifyingExtension::class)]
+class TypeExtensionsTest extends TypeInferenceTestCase
 {
 
     /**
@@ -17,6 +21,8 @@ class EnrolGetPluginTypeSpecifyingExtensionTest extends TypeInferenceTestCase
     public static function dataFileAsserts(): iterable
     {
         yield from self::gatherAssertTypes(__DIR__ . '/data/enrol_get_plugin1.php');
+        yield from self::gatherAssertTypes(__DIR__ . '/data/get_auth_plugin1.php');
+        yield from self::gatherAssertTypes(__DIR__ . '/data/get_plugin_generator1.php');
     }
 
     #[DataProvider('dataFileAsserts')]
