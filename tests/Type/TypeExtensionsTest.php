@@ -3,15 +3,15 @@
 namespace PhpstanMoodle\Test\Type;
 
 use PHPStan\Testing\TypeInferenceTestCase;
-use PhpstanMoodle\Type\EnrolGetPluginTypeSpecifyingExtension;
-use PhpstanMoodle\Type\GetAuthPluginTypeSpecifyingExtension;
-use PhpstanMoodle\Type\GetPluginGeneratorTypeSpecifyingExtension;
+use PhpstanMoodle\Type\EnrolGetPluginDynamicReturnTypeExtension;
+use PhpstanMoodle\Type\GetAuthPluginDynamicReturnTypeExtension;
+use PhpstanMoodle\Type\GetPluginGeneratorDynamicReturnTypeExtension;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\DataProvider;
 
-#[CoversClass(EnrolGetPluginTypeSpecifyingExtension::class)]
-#[CoversClass(GetAuthPluginTypeSpecifyingExtension::class)]
-#[CoversClass(GetPluginGeneratorTypeSpecifyingExtension::class)]
+#[CoversClass(EnrolGetPluginDynamicReturnTypeExtension::class)]
+#[CoversClass(GetAuthPluginDynamicReturnTypeExtension::class)]
+#[CoversClass(GetPluginGeneratorDynamicReturnTypeExtension::class)]
 class TypeExtensionsTest extends TypeInferenceTestCase
 {
 

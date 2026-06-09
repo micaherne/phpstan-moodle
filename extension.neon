@@ -39,17 +39,17 @@ services:
 			addCommonIncludes: %moodle.addCommonIncludes%
 
 	-
-		class: PhpstanMoodle\Type\GetAuthPluginTypeSpecifyingExtension
+		class: PhpstanMoodle\Type\GetAuthPluginDynamicReturnTypeExtension
 		tags:
 			- phpstan.broker.dynamicFunctionReturnTypeExtension
 
 	-
-		class: PhpstanMoodle\Type\EnrolGetPluginTypeSpecifyingExtension
+		class: PhpstanMoodle\Type\EnrolGetPluginDynamicReturnTypeExtension
 		tags:
 			- phpstan.broker.dynamicFunctionReturnTypeExtension
 
 	-
-		class: PhpstanMoodle\Type\GetPluginGeneratorTypeSpecifyingExtension
+		class: PhpstanMoodle\Type\GetPluginGeneratorDynamicReturnTypeExtension
 		tags:
 			- phpstan.broker.dynamicMethodReturnTypeExtension
 

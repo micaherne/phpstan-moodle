@@ -7,15 +7,17 @@ use PhpParser\Node\Scalar\String_;
 use PHPStan\Analyser\Scope;
 use PHPStan\Reflection\FunctionReflection;
 use PHPStan\Type\DynamicFunctionReturnTypeExtension;
+use PHPStan\Type\NullType;
 use PHPStan\Type\ObjectType;
 use PHPStan\Type\Type;
+use PHPStan\Type\UnionType;
 
-class GetAuthPluginTypeSpecifyingExtension implements DynamicFunctionReturnTypeExtension
+class EnrolGetPluginDynamicReturnTypeExtension implements DynamicFunctionReturnTypeExtension
 {
 
     public function isFunctionSupported(FunctionReflection $functionReflection): bool
     {
-        return $functionReflection->getName() === 'get_auth_plugin';
+        return $functionReflection->getName() === 'enrol_get_plugin';
     }
 
     public function getTypeFromFunctionCall(
@@ -31,7 +33,7 @@ class GetAuthPluginTypeSpecifyingExtension implements DynamicFunctionReturnTypeE
             return null;
         }
 
-        // The function throws an exception if the plugin type is not found so it is never null.
-        return new ObjectType('\auth_plugin_' . $arg1->value);
+        // The function returns null if the plugin is not found.
+        return new UnionType([new NullType(), new ObjectType('\enrol_' . $arg1->value . '_plugin')]);
     }
 }
