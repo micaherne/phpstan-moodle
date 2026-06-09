@@ -3,12 +3,12 @@
 namespace PhpstanMoodle\Type;
 
 use PhpParser\Node\Expr\FuncCall;
-use PhpParser\Node\Scalar\String_;
 use PHPStan\Analyser\Scope;
 use PHPStan\Reflection\FunctionReflection;
 use PHPStan\Type\DynamicFunctionReturnTypeExtension;
 use PHPStan\Type\ObjectType;
 use PHPStan\Type\Type;
+use PHPStan\Type\TypeCombinator;
 
 class GetAuthPluginDynamicReturnTypeExtension implements DynamicFunctionReturnTypeExtension
 {
@@ -23,15 +23,20 @@ class GetAuthPluginDynamicReturnTypeExtension implements DynamicFunctionReturnTy
         FuncCall $functionCall,
         Scope $scope
     ): ?Type {
-        if ($functionCall->getArgs() === []) {
+        $args = $functionCall->getArgs();
+        if ($args === []) {
             return null;
         }
-        $arg1 = $functionCall->getArgs()[0]->value;
-        if (!$arg1 instanceof String_) {
+
+        $types = [];
+        foreach ($scope->getType($args[0]->value)->getConstantStrings() as $constantString) {
+            $types[] = new ObjectType('\auth_plugin_' . $constantString->getValue());
+        }
+        if ($types === []) {
             return null;
         }
 
         // The function throws an exception if the plugin type is not found so it is never null.
-        return new ObjectType('\auth_plugin_' . $arg1->value);
+        return TypeCombinator::union(...$types);
     }
 }
