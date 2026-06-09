@@ -9,10 +9,7 @@ Note that this will execute code in your Moodle codebase.
 
 ## Installation
 
-To use this plugin, install it with phpstan extension-installer:
-
-
-Otherwise, require it in [Composer](https://getcomposer.org/):
+Require the plugin in [Composer](https://getcomposer.org/):
 
 ```bash
 
@@ -20,7 +17,15 @@ composer require --dev micaherne/phpstan-moodle
 
 ```
 
-Then create a `phpstan.neon` file in the root of your project with the following contents:
+If you also have [phpstan/extension-installer](https://github.com/phpstan/extension-installer) installed, the extension will be registered with PHPStan automatically and no further configuration is needed:
+
+```bash
+
+composer require --dev phpstan/extension-installer
+
+```
+
+Otherwise, include the extension manually in the `phpstan.neon` file in the root of your project:
 
 ```neon
 
