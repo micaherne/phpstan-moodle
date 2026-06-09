@@ -58,3 +58,9 @@ parametersSchema:
 		rootDirectory: string(),
 		addCommonIncludes: bool()
 	])
+
+# Resolve a relative moodle.rootDirectory against the directory of the
+# config file it is written in, like PHPStan's own path parameters.
+# Requires PHPStan 2.1.18+.
+expandRelativePaths:
+	- '[parameters][moodle][rootDirectory]'
