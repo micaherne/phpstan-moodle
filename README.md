@@ -45,7 +45,7 @@ parameters:
 
 ```
 
-The rootDirectory parameter *must* be an absolute path. Also, `composer install` must have been run in the Moodle root directory to create the vendor directory.
+The rootDirectory parameter may be an absolute path, or a path relative to the config file it is written in (in the same way as PHPStan's own path parameters such as `paths` and `scanDirectories`). Also, `composer install` must have been run in the Moodle root directory to create the vendor directory.
 
 ### Common includes
 

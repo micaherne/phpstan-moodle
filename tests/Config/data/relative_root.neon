@@ -1,0 +1,10 @@
+includes:
+    - ../../../extension.neon
+
+parameters:
+    # Prevent bootstrap.php from running, as it would try to initialise
+    # a real Moodle installation.
+    bootstrapFiles!: []
+    moodle:
+        # Resolves to the tests/data directory of this project.
+        rootDirectory: ../../data
