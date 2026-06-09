@@ -3,12 +3,12 @@
 namespace PhpstanMoodle\Type;
 
 use PhpParser\Node\Expr\MethodCall;
-use PhpParser\Node\Scalar\String_;
 use PHPStan\Analyser\Scope;
 use PHPStan\Reflection\MethodReflection;
 use PHPStan\Type\DynamicMethodReturnTypeExtension;
 use PHPStan\Type\ObjectType;
 use PHPStan\Type\Type;
+use PHPStan\Type\TypeCombinator;
 
 class GetPluginGeneratorDynamicReturnTypeExtension implements DynamicMethodReturnTypeExtension
 {
@@ -29,21 +29,26 @@ class GetPluginGeneratorDynamicReturnTypeExtension implements DynamicMethodRetur
         MethodCall $methodCall,
         Scope $scope
     ): ?Type {
-        if (count($methodCall->getArgs()) < 1) {
-            return null;
-        }
-        $arg1 = $methodCall->getArgs()[0]->value;
-        if (!$arg1 instanceof String_) {
+        $args = $methodCall->getArgs();
+        if ($args === []) {
             return null;
         }
 
-        $component = $arg1->value;
+        $types = [];
+        foreach ($scope->getType($args[0]->value)->getConstantStrings() as $constantString) {
+            $component = $constantString->getValue();
 
-        if (class_exists('core_component')) {
-            [$type, $plugin] = \core_component::normalize_component($component);
-            $component = $type . '_' . $plugin;
+            if (class_exists('core_component')) {
+                [$type, $plugin] = \core_component::normalize_component($component);
+                $component = $type . '_' . $plugin;
+            }
+
+            $types[] = new ObjectType('\\' . $component . '_generator');
+        }
+        if ($types === []) {
+            return null;
         }
 
-        return new ObjectType('\\' . $component . '_generator');
+        return TypeCombinator::union(...$types);
     }
 }

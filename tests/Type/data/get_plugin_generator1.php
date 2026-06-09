@@ -9,3 +9,6 @@ use function PHPStan\Testing\assertType;
 $t = new testing_data_generator();
 $generator1 = $t->get_plugin_generator('mod_label');
 assertType('\mod_label_generator', $generator1);
+
+$component = 'mod_quiz';
+assertType('\mod_quiz_generator', $t->get_plugin_generator($component));

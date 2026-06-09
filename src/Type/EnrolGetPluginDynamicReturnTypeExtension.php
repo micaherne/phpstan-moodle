@@ -3,14 +3,12 @@
 namespace PhpstanMoodle\Type;
 
 use PhpParser\Node\Expr\FuncCall;
-use PhpParser\Node\Scalar\String_;
 use PHPStan\Analyser\Scope;
 use PHPStan\Reflection\FunctionReflection;
 use PHPStan\Type\DynamicFunctionReturnTypeExtension;
-use PHPStan\Type\NullType;
 use PHPStan\Type\ObjectType;
 use PHPStan\Type\Type;
-use PHPStan\Type\UnionType;
+use PHPStan\Type\TypeCombinator;
 
 class EnrolGetPluginDynamicReturnTypeExtension implements DynamicFunctionReturnTypeExtension
 {
@@ -25,15 +23,20 @@ class EnrolGetPluginDynamicReturnTypeExtension implements DynamicFunctionReturnT
         FuncCall $functionCall,
         Scope $scope
     ): ?Type {
-        if ($functionCall->getArgs() === []) {
+        $args = $functionCall->getArgs();
+        if ($args === []) {
             return null;
         }
-        $arg1 = $functionCall->getArgs()[0]->value;
-        if (!$arg1 instanceof String_) {
+
+        $types = [];
+        foreach ($scope->getType($args[0]->value)->getConstantStrings() as $constantString) {
+            $types[] = new ObjectType('\enrol_' . $constantString->getValue() . '_plugin');
+        }
+        if ($types === []) {
             return null;
         }
 
         // The function returns null if the plugin is not found.
-        return new UnionType([new NullType(), new ObjectType('\enrol_' . $arg1->value . '_plugin')]);
+        return TypeCombinator::addNull(TypeCombinator::union(...$types));
     }
 }
