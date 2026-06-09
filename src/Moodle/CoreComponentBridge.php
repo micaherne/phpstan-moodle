@@ -348,9 +348,10 @@ final class CoreComponentBridge
      *
      * This is specifically for use with the getStaticPropertyValue() method of ReflectionClass.
      *
+     * @param mixed $map
      * @return array<string, string>
      */
-    private static function toStringMap(mixed $map): array
+    private static function toStringMap($map): array
     {
         if (!is_array($map)) {
             throw new RuntimeException('Map is not an array');
